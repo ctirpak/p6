@@ -2,7 +2,7 @@
 
 This project uses [Jasmine](http://jasmine.github.io/) to test a web-based application that reads RSS feeds.
 
-To run this project, open the [index.html](http://ctirpak.github.io/p6) file. Each of the test cases will run and the results will be displayed at the bottom of the page.
+To run this project, open the index.html file. Each of the test cases will run and the results will be displayed at the bottom of the page.
 
 ### Test Cases Written:
 

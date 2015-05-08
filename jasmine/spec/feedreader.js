@@ -81,9 +81,9 @@ $(function () {
 					expect($(element).attr('class')).toBe('menu-hidden');
 				});
 			});
-			it('has left x axis that is less than zero', function () {
-				//check to see that the left side of the menu is not visible i.e. < 0
-				expect($('.menu')[0].getBoundingClientRect().left < 0).toBeTruthy();
+			it('has right x axis that is less than zero', function () {
+				//check to see that the right side of the menu is not visible i.e. < 0
+				expect($('.menu')[0].getBoundingClientRect().right < 0).toBeTruthy();
 			});
 		});
 
@@ -94,6 +94,8 @@ $(function () {
 		 */
 		describe('changes visibility when clicked', function() {
 			var leftMenuVisible;
+			var rightMenuVisible;
+			var hasClass;
 			
 			/* since the menu should be hidden initially, one click on the menu
 			 * icon will show the menu
@@ -115,6 +117,9 @@ $(function () {
 				setTimeout(function() {
 					//check if left of bounding rectangle is 0
 					leftMenuVisible = $('#menu')[0].getBoundingClientRect().left === 0;
+					//check the right edge to make sure it is less than the window
+					//edge AND that it is greater than 0
+					rightMenuVisible = ($('#menu')[0].getBoundingClientRect().right <= $(window).width()) && ($('#menu')[0].getBoundingClientRect().right > 0);
 					done();
 				},300);
 			});
@@ -122,11 +127,23 @@ $(function () {
 			it('shows when clicked', function () {
 				//check to see if the left edge of the menu is visible i.e. = 0
 				expect(leftMenuVisible).toBeTruthy();
+				expect(rightMenuVisible).toBeTruthy();
+				//loop through each element
+				$('body').each(function (index, element) {
+					//check to see that the 'menu-hidden' class is applied
+					expect($(element).attr('class')).not.toBe('menu-hidden');
+				});
 			});
 	
 			it('hides when clicked again', function () {
 				//check to see if the left edge of the menu is not visible i.e. < 0
 				expect(leftMenuVisible).toBeFalsy();
+				expect(rightMenuVisible).toBeFalsy();
+				//loop through each element
+				$('body').each(function (index, element) {
+					//check to see that the 'menu-hidden' class is NOT applied
+					expect($(element).attr('class')).toBe('menu-hidden');
+				});
 			});
 		});
 	});
@@ -168,25 +185,18 @@ $(function () {
 			//start with the last feed first
 			loadFeed(1,done);
 			oldContent = $('.feed').html();
-			//console.log($('.feed').html());
 		});
 		it('content should change when feed 0 is loaded', function(done) {
 			loadFeed(0,done);
 			expect($('.feed').html() != oldContent).toBeTruthy();
-			//console.log($('.feed').html());
-			//console.log(oldContent);
 		});
 		it('content should change when feed 2 is loaded', function(done) {
 			loadFeed(2,done);
 			expect($('.feed').html() != oldContent).toBeTruthy();
-			//console.log($('.feed').html());
-			//console.log(oldContent);
 		});
 		it('content should change when feed 3 is loaded', function(done) {
 			loadFeed(3,done);
 			expect($('.feed').html() != oldContent).toBeTruthy();
-			//console.log($('.feed').html());
-			//console.log(oldContent);
 		});
 	});
 
